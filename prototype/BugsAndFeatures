@@ -2,14 +2,30 @@ Bugs and Features
 
 1) Fix the problem were new 'nodes' cannot be created, once a collision has been detected?
 
+	a) Confirm that the 'match_found' flag is being reset to 'false'?
+
+		NO 'match_found' is never gets reset..
+
+	FIXED
+
 2) Currently support latest Firefox and Chrome brownsers only?
 
 Features (MVP)
 
-1) Show a highlight on a clicked 'node' to show it has been selected.
+1) In prototype show a highlight on a clicked 'node' to show it has been selected.
 
-2) Enable user to save there current 'map', when user clicks on 'Use Map' (currently into a JSON file)
+	DONE
 
-3) Enable the user to drill down on specific nodes (once they finished creating the map and clicked on the 'Use Map' button)
+2) Convert 'array' object into a full JSON style object.
 
-4) Create two buttons 'Use Map' (create a JSON file of the current map) the other 'Edit Map' (allow user to modify map)
+	DONE
+
+3) In prototype enable user to save their current 'map', when user clicks on 'Use Map' (currently into a JSON object that will be put into 'local storage'). If 'local storage' contains data (on startup of page) automatically 'draw' that map and leave app in 'Edit Map'.
+
+4) In prototype enable the user to drill down on specific nodes (once they finished creating the map and clicked on the 'Use Map' button)
+
+5) In prototype create two buttons 'Use Map' (create a JSON file of the current map) the other 'Edit Map' (allow user to modify map)
+
+	DONE
+
+6) Create feature to delete an unwanted map.
