@@ -9,6 +9,7 @@ var previous_node_y_position = 0;
 var click_node_position = [];
 var current_position = {};
 var match_found = false;
+var use_map_flag = false;
 
 /* If 'local storage' contains the JSON file then load that into the array and display by calling 'use_map' function */
 
@@ -55,29 +56,39 @@ canvas.addEventListener('click', (event) => {
 
 	});
 
-	/* Check if a new node is required or this is the first node (and a new node is required) */
+	if(use_map_flag == false) {
 
-	if(node_details.node_array.length == 0 || match_found == false) {
+		/* Check if a new node is required or this is the first node (and a new node is required) */
 
-		draw_circle(x, y, "red");
+		if(node_details.node_array.length == 0 || match_found == false) {
 
-		/* Get name of 'mind map' node from 'user' */
+			draw_circle(x, y, "red");
 
-		var text = node_text(x, y, null);
+			/* Get name of 'mind map' node from 'user' */
 
-		/* Draw arrow if there is more than one 'node' currently */
+			var text = node_text(x, y, null);
 
-		if(node_details.node_array.length > 0)
-		{
-			draw_line(previous_node_x_position, previous_node_y_position, x, y);
+			/* Draw arrow if there is more than one 'node' currently */
+
+			if(node_details.node_array.length > 0)
+			{
+				draw_line(previous_node_x_position, previous_node_y_position, x, y);
+			}
+
+			/* Put the current 'click' position into an array */
+
+			var current_node = {x : x, y : y, node_text : text, line_start_x : previous_node_x_position, line_start_y : previous_node_y_position, line_stop_x : x, line_stop_y : y};
+
+			node_details.node_array.push(current_node);
+
 		}
 
-		/* Put the current 'click' position into an array */
+	}
+	else
+	{
+		/* Redraw 'child nodes' and the user has clicked the 'paraent node' */
 
-		var current_node = {x : x, y : y, node_text : text, line_start_x : previous_node_x_position, line_start_y : previous_node_y_position, line_stop_x : x, line_stop_y : y};
-
-		node_details.node_array.push(current_node);
-
+		edit_map();
 	}
 
 	previous_node_x_position = x;
@@ -139,9 +150,26 @@ function use_map() {
 
 	/* Contract all 'child nodes' to only show 'parent nodes' */
 
+	/* Clear the 'canvas' */
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	/* Show node that is the 'first' in the list only */
+
+	draw_circle(node_details.node_array[0].x, node_details.node_array[0].y, "red");
+
+	/* Draw the */
+
+	node_text(node_details.node_array[0].x, node_details.node_array[0].y, node_details.node_array[0].node_text);
+
+	/* Set 'use_map' flag, which means when a user click on a parent node is does not generate any new nodes */
+
+	use_map_flag = true;
 }
 
 function edit_map() {
+
+	use_map_flag = false;
 
 	/* Expand to show all 'child nodes' of the 'parent nodes' (which is the same as redrawing the 'mind map' from local storage) */
 
