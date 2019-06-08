@@ -203,6 +203,17 @@ function edit_map() {
 		
 	});
 
-	/* Enable user to add extra 'parent' and 'child' nodes */
+}
+
+
+/* Delete map  */
+function delete_map(){
+
+	localStorage.removeItem('mind_map_data');
+
+/* Clear the 'canvas' */
+
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 }
+
